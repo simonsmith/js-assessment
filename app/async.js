@@ -1,11 +1,13 @@
 exports = (typeof window === 'undefined') ? global : window;
 
 exports.asyncAnswers = {
-  async : function(value) {
-
+  async(value) {
+    return Promise.resolve(value);
   },
 
-  manipulateRemoteData : function(url) {
-
+  manipulateRemoteData(url) {
+    return fetch(url)
+      .then(response => response.json())
+      .then(json => json.people.map(person => person.name).sort());
   }
 };
