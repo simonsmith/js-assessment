@@ -41,7 +41,7 @@ exports.arraysAnswers = {
   },
 
   concat(arr1, arr2) {
-    return arr1.concat(arr2);
+    return [...arr1, ...arr2];
   },
 
   insert(arr, item, index) {
