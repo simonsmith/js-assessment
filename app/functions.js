@@ -1,39 +1,48 @@
 exports = (typeof window === 'undefined') ? global : window;
 
 exports.functionsAnswers = {
-  argsAsArray : function(fn, arr) {
-
+  argsAsArray(fn, arr) {
+    return fn.apply(fn, arr);
   },
 
-  speak : function(fn, obj) {
-
+  speak(fn, obj) {
+    return fn.call(obj);
   },
 
-  functionFunction : function(str) {
-
+  functionFunction(str) {
+    return newStr => `${str}, ${newStr}`;
   },
 
-  makeClosures : function(arr, fn) {
-
+  makeClosures(arr, fn) {
+    return arr.map(num => {
+      return (i => fn.bind(null, i))(num);
+    });
   },
 
-  partial : function(fn, str1, str2) {
-
+  partial(fn, str1, str2) {
+    return fn.bind(null, str1, str2);
   },
 
-  useArguments : function() {
-
+  useArguments(...args) {
+    return args.reduce((initial, num) => initial + num, 0);
   },
 
-  callIt : function(fn) {
-
+  callIt(fn, ...args) {
+    return fn.apply(null, args);
   },
 
-  partialUsingArguments : function(fn) {
-
+  partialUsingArguments(fn, ...args) {
+    return fn.bind(null, ...args);
   },
 
-  curryIt : function(fn) {
-
+  curryIt(fn) {
+    return function curried(...args) {
+      if (args.length < fn.length) {
+        return function () {
+          curried.apply(null, args.concat(Array.from(arguments)));
+        };
+      }
+      return fn.apply(null, args);
+    };
   }
 };
